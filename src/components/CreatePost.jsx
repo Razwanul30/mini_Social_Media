@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function CreatePost({ posts, setPosts }) {
+function CreatePost({ posts, setPosts, author }) {
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
@@ -10,7 +10,7 @@ function CreatePost({ posts, setPosts }) {
 
     const newPost = {
       id: Date.now(),
-      author: "You",
+      author: author.name,
       content: text,
     };
 

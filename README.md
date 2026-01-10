@@ -1,16 +1,46 @@
-# React + Vite
+# Mini Social Media App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple social media-style application built with React to practice core
+frontend concepts and component-based architecture.
 
-Currently, two official plugins are available:
+## Features
+- Create post
+- Like post
+- Comment on posts
+- Delete posts
+- Simple login (name-based)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React
+- JavaScript
+- Vite
 
-## React Compiler
+## Design Decisions
+This project is intentionally kept simple and open to focus on learning React
+fundamentals instead of complex business rules.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Open social feed: any user can create, like, comment, and delete posts.
+- No strict ownership rules for posts.
+- No global state management (Redux) in this version.
+- No real authentication; login is UI-focused.
 
-## Expanding the ESLint configuration
+## Learning Goals
+- Component separation
+- State lifting and props
+- Form handling
+- Local state management with `useState`
+- Building real-world UI features step by step
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Future Improvements
+- Proper authentication
+- Role-based permissions
+- Global state management (Redux)
+- Backend API integration
+
+## Author
+
+**Md Razwanul Haque**  
+Computer Science & Engineering Student  
+Beginner Frontend Developer (React)
+
+

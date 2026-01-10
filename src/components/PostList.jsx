@@ -1,14 +1,18 @@
-function PostList({ posts }) {
+import Post from "./Post";
+
+function PostList({ posts, onDelete }) {
+  if (posts.length === 0) {
+    return <p>No posts yet</p>;
+  }
+
   return (
     <div>
-      {posts.length === 0 && <p>No posts yet</p>}
-
       {posts.map((post) => (
-        <div key={post.id}>
-          <strong>{post.author}</strong>
-          <p>{post.content}</p>
-          <hr />
-        </div>
+        <Post
+          key={post.id}
+          post={post}
+          onDelete={onDelete}
+        />
       ))}
     </div>
   );
