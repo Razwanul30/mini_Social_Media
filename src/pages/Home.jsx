@@ -1,8 +1,16 @@
+import { useState } from "react";
+import CreatePost from "../components/CreatePost";
+import PostList from "../components/PostList";
+
 function Home({ user }) {
+  const [posts, setPosts] = useState([]);
+
   return (
     <div>
       <h2>Welcome, {user.name}</h2>
-      <p>Post system next step...</p>
+
+      <CreatePost posts={posts} setPosts={setPosts} />
+      <PostList posts={posts} />
     </div>
   );
 }
