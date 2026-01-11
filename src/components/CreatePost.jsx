@@ -18,18 +18,29 @@ function CreatePost({ posts, setPosts, author }) {
     setText("");
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="What's on your mind?"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        autoFocus
-      />
-      <button type="submit">Post</button>
-    </form>
-  );
+return (
+  <div className="card mb-3">
+    <div className="card-body">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          className="form-control mb-2"
+          placeholder="What's on your mind?"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          autoFocus
+        />
+
+        <div className="text-end">
+          <button type="submit" className="btn btn-primary btn-sm">
+            Post
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+);
+
 }
 
 export default CreatePost;

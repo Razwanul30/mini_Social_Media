@@ -14,36 +14,61 @@ function Post({ post, onDelete }) {
   };
 
   return (
-    <div>
-      <strong>{post.author}</strong>
-      <p>{post.content}</p>
+    <div className="card mb-3">
+      <div className="card-body">
+        <h6 className="card-subtitle mb-2 text-primary fw-bold">
+          {post.author}
+        </h6>
 
-      <button onClick={() => setLiked(!liked)}>
-        {liked ? "❤️ Liked" : "🤍 Like"}
-      </button>
+        <p className="card-text">{post.content}</p>
 
-      <button onClick={() => onDelete(post.id)}>
-        🗑️ Delete
-      </button>
+        <div className="d-flex gap-2 mb-3">
+          <button
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => setLiked(!liked)}
+          >
+            <span className={liked ? "text-danger" : "text-muted"}>
+              {liked ? "❤️" : "🤍"}
+            </span>{" "}
+            Like
+          </button>
 
-      {/* Comments */}
-      <form onSubmit={addComment}>
-        <input
-          type="text"
-          placeholder="Write a comment..."
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
-        />
-        <button type="submit">Comment</button>
-      </form>
+          <button
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => onDelete(post.id)}
+          >
+            🗑️ Delete
+          </button>
+        </div>
 
-      {comments.map((c, i) => (
-        <p key={i}>💬 {c}</p>
-      ))}
+        {/* Comment Input */}
+        <form onSubmit={addComment} className="d-flex gap-2">
+          <input
+            type="text"
+            className="form-control form-control-sm"
+            placeholder="Write a comment..."
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+          />
+          <button className="btn btn-sm btn-primary" type="submit">
+            Comment
+          </button>
+        </form>
 
-      <hr />
+        {/* Comments */}
+        {comments.length > 0 && (
+          <div className="mt-3">
+            {comments.map((c, i) => (
+              <p key={i} className="mb-1">
+                💬 {c}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
+
 }
 
 export default Post;

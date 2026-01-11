@@ -2,11 +2,15 @@ import Post from "./Post";
 
 function PostList({ posts, onDelete }) {
   if (posts.length === 0) {
-    return <p>No posts yet</p>;
+    return (
+      <p className="text-center text-muted">
+        No posts yet. Be the first to post!
+      </p>
+    );
   }
 
   return (
-    <div>
+    <div className="mt-3">
       {posts.map((post) => (
         <Post
           key={post.id}
