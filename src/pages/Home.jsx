@@ -15,7 +15,8 @@ function Home({ user }) {
           title: post.title,
           content: post.body,
           tags: post.tags,
-          likes: post.reactions,
+          likes: post.reactions.likes,
+          liked: false,
           authorId: post.userId,
           authorName: `User ${post.userId}`,
           comments: []
@@ -25,17 +26,62 @@ function Home({ user }) {
       });
   }, []);
 
+  const likePost = (id) => {
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.id === id
+          ? {
+              ...post,
+              liked: !post.liked,
+              likes: post.liked ? post.likes - 1 : post.likes + 1,
+            }
+          : post
+      )
+    );
+  };
+
+
   // 🔹 Delete post logic
   const deletePost = (id) => {
     setPosts(prev => prev.filter(post => post.id !== id));
   };
 
-  return (
-    <div className="container mt-4">
-      <CreatePost posts={posts} setPosts={setPosts} author={user} />
-      <PostList posts={posts} onDelete={deletePost} />
-    </div>
-  );
+ return (
+   <div className="container mt-4">
+     <div className="row justify-content-center">
+       {/* welcome to home page */}
+       <div className="container my-4">
+         <div className="row justify-content-center">
+           <div className="col-12 col-md-10 col-lg-8">
+             <div className="card shadow-sm">
+               <div className="card-body text-center text-md-start">
+                 <h2 className="card-title fw-bold">
+                   Welcome,
+                   <span className="text-primary ms-2">{user.name}!</span>
+                 </h2>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+
+       {/* Create Post Section */}
+       <div className="col-12 col-md-10 col-lg-8 mb-4">
+         <div className="card shadow-sm">
+           <div className="card-body">
+             <CreatePost posts={posts} setPosts={setPosts} author={user} />
+           </div>
+         </div>
+       </div>
+
+       {/* Post List Section */}
+       <div className="col-12 col-md-10 col-lg-8">
+         <PostList posts={posts} onDelete={deletePost} onLike={likePost} />
+       </div>
+     </div>
+   </div>
+ );
+
 }
 
 export default Home;

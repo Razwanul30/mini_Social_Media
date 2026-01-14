@@ -1,6 +1,6 @@
 import Post from "./Post";
 
-function PostList({ posts, onDelete }) {
+function PostList({ posts, onDelete, onLike }) {
   if (posts.length === 0) {
     return (
       <p className="text-center text-muted">
@@ -16,6 +16,7 @@ function PostList({ posts, onDelete }) {
           key={post.id}
           post={post}
           onDelete={onDelete}
+          onLike={onLike}   //{/* 👈 THIS LINE */}
         />
       ))}
     </div>

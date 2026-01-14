@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState , useRef } from "react";
 
 function CreatePost({ posts, setPosts, author }) {
   const [text, setText] = useState("");
+  const inputRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -10,12 +11,19 @@ function CreatePost({ posts, setPosts, author }) {
 
     const newPost = {
       id: Date.now(),
-      author: author.name,
+      tittle: "",
       content: text,
+      tags: [],
+      likes: 0,
+      liked: false,
+      authorid: author.id,
+      authorName: author.name,
+      contents: [],
     };
 
     setPosts([newPost, ...posts]);
     setText("");
+    inputRef.current.focus();
   };
 
 return (
@@ -23,12 +31,13 @@ return (
     <div className="card-body">
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
+          // type="text"
+          ref={inputRef}
           className="form-control mb-2"
           placeholder="What's on your mind?"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          autoFocus
+          // autoFocus
         />
 
         <div className="text-end">
