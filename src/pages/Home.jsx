@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import CreatePost from "../components/CreatePost";
 import PostList from "../components/PostList";
 
-function Home({ user }) {
+function Home({ user,setUser }) {
   const [posts, setPosts] = useState([]);
 
   // 🔹 Fetch posts from Dummy API
@@ -46,19 +46,33 @@ function Home({ user }) {
     setPosts(prev => prev.filter(post => post.id !== id));
   };
 
+  const logout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  }
+
  return (
    <div className="container mt-4">
      <div className="row justify-content-center">
        {/* welcome to home page */}
-       <div className="container my-4">
-         <div className="row justify-content-center">
-           <div className="col-12 col-md-10 col-lg-8">
-             <div className="card shadow-sm">
-               <div className="card-body text-center text-md-start">
-                 <h2 className="card-title fw-bold">
+       <div className="row justify-content-center">
+         <div className="col-12 col-md-10 col-lg-8">
+           <div className="card shadow-sm">
+             <div className="card-body">
+               <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                 {/* Welcome text */}
+                 <h2 className="card-title fw-bold mb-0 text-center text-md-start">
                    Welcome,
                    <span className="text-primary ms-2">{user.name}!</span>
                  </h2>
+
+                 {/* Logout button */}
+                 <button
+                   className="btn btn-outline-danger btn-sm"
+                   onClick={logout}
+                 >
+                   Logout
+                 </button>
                </div>
              </div>
            </div>
@@ -66,7 +80,7 @@ function Home({ user }) {
        </div>
 
        {/* Create Post Section */}
-       <div className="col-12 col-md-10 col-lg-8 mb-4">
+       <div className="col-12 col-md-10 col-lg-8 mb-4 mt-3">
          <div className="card shadow-sm">
            <div className="card-body">
              <CreatePost posts={posts} setPosts={setPosts} author={user} />

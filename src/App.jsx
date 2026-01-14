@@ -4,10 +4,16 @@ import Home from "./pages/Home";
 
 function App() {
   const [user, setUser] = useState(null);
+  JSON.parse(localStorage.getItem("user"));
 
   return (
     <>
-      {user ? <Home user={user} /> : <Login setUser={setUser} />}
+      {user ? (
+        <Home user={user} 
+        setUser={setUser} />
+        ) : (
+        <Login setUser={setUser} />
+        )}
     </>
   );
 }

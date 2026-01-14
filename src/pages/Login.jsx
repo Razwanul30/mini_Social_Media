@@ -4,15 +4,24 @@ function Login({ setUser }) {
   const [name, setName] = useState("");
   const inputRef = useRef(null);
 
+
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name.trim() !== "") {
-      setUser({ name });
+    if (!name.trim()) {
+      return;
     }
+
+    const user = {
+      id: Date.now(),
+      name: name.trim(),
+    };
+    localStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
   };
 
   return (
