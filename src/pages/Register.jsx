@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import api from "../api/api";
 
-
-function Login({ setUser, setShowRegister }) {
+function Register({ setShowRegister }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,17 +19,18 @@ function Login({ setUser, setShowRegister }) {
     try {
       setError("");
 
-      const res = await api.post("/auth/login", {
+      await api.post("/auth/register", {
+        name,
         email,
         password,
       });
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      setUser(res.data.user);
+      alert("Registration successful. Please login.");
+      setShowRegister(false);
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed");
+      setError(
+        error.response?.data?.message || "Registration failed"
+      );
     }
   };
 
@@ -38,12 +39,24 @@ function Login({ setUser, setShowRegister }) {
       <div className="row justify-content-center">
         <div className="col-12 col-md-6 col-lg-4">
           <form onSubmit={handleSubmit}>
-            <h2 className="mb-3 text-center">Login</h2>
+            <h2 className="mb-3 text-center">Register</h2>
 
-            {error && <div className="alert alert-danger">{error}</div>}
+            {error && (
+              <div className="alert alert-danger">
+                {error}
+              </div>
+            )}
 
             <input
               ref={inputRef}
+              type="text"
+              className="form-control mb-3"
+              placeholder="Enter name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+
+            <input
               type="email"
               className="form-control mb-3"
               placeholder="Enter email"
@@ -59,24 +72,28 @@ function Login({ setUser, setShowRegister }) {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button type="submit" className="btn btn-primary w-100">
-              Login
-            </button>
-          </form>
-          <p className="text-center mt-3">
-            Don't have an account?{" "}
             <button
-              type="button"
-              className="btn btn-link p-0"
-              onClick={() => setShowRegister(true)}
+              type="submit"
+              className="btn btn-success w-100"
             >
               Register
             </button>
-          </p>
+
+            <p className="text-center mt-3">
+              Already have an account?{" "}
+              <button
+                type="button"
+                className="btn btn-link p-0"
+                onClick={() => setShowRegister(false)}
+              >
+                Login
+              </button>
+            </p>
+          </form>
         </div>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default Register;
