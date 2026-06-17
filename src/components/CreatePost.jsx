@@ -1,30 +1,38 @@
 import { useState , useRef } from "react";
+import api from "../api/api";
 
 function CreatePost({ posts, setPosts, author }) {
   const [text, setText] = useState("");
   const inputRef = useRef(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (text.trim() === "") return;
+  if (!text.trim()) return;
 
-    const newPost = {
-      id: Date.now(),
-      tittle: "",
-      content: text,
-      tags: [],
-      likes: 0,
-      liked: false,
-      authorid: author.id,
-      authorName: author.name,
-      contents: [],
-    };
+  try {
+    const token = localStorage.getItem("token");
 
-    setPosts([newPost, ...posts]);
+    const res = await api.post(
+      "/posts",
+      {
+        content: text,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setPosts((prev) => [res.data, ...prev]);
+
     setText("");
     inputRef.current.focus();
-  };
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
 
 return (
   <div className="card mb-3">

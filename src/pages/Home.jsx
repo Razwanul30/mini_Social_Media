@@ -1,53 +1,114 @@
 import { useEffect, useState } from "react";
 import CreatePost from "../components/CreatePost";
 import PostList from "../components/PostList";
+import api from "../api/api";
 
 function Home({ user,setUser }) {
   const [posts, setPosts] = useState([]);
 
-  // 🔹 Fetch posts from Dummy API
   useEffect(() => {
-    fetch("https://dummyjson.com/posts")
-      .then(res => res.json())
-      .then(data => {
-        const formattedPosts = data.posts.map(post => ({
-          id: post.id,
-          title: post.title,
-          content: post.body,
-          tags: post.tags,
-          likes: post.reactions.likes,
-          liked: false,
-          authorId: post.userId,
-          authorName: `User ${post.userId}`,
-          comments: []
-        }));
-
-        setPosts(formattedPosts);
-      });
-  }, []);
-
-  const likePost = (id) => {
-    setPosts((prev) =>
-      prev.map((post) =>
-        post.id === id
-          ? {
-              ...post,
-              liked: !post.liked,
-              likes: post.liked ? post.likes - 1 : post.likes + 1,
-            }
-          : post
-      )
-    );
+  const fetchPosts = async () => {
+    try {
+      const res = await api.get("/posts");
+      setPosts(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  fetchPosts();
+}, []);
+
+  // 🔹 Fetch posts from Dummy API
+  // useEffect(() => {
+  //   fetch("https://dummyjson.com/posts")
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       const formattedPosts = data.posts.map(post => ({
+  //         id: post.id,
+  //         title: post.title,
+  //         content: post.body,
+  //         tags: post.tags,
+  //         likes: post.reactions.likes,
+  //         liked: false,
+  //         authorId: post.userId,
+  //         authorName: `User ${post.userId}`,
+  //         comments: []
+  //       }));
+
+  //       setPosts(formattedPosts);
+  //     });
+  // }, []);
+
+
+
+  const likePost = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await api.post(
+      `/posts/${id}/like`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const res = await api.get("/posts");
+    setPosts(res.data);
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
 
 
   // 🔹 Delete post logic
-  const deletePost = (id) => {
-    setPosts(prev => prev.filter(post => post.id !== id));
-  };
+const deletePost = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+    await api.delete(`/posts/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setPosts((prev) =>
+      prev.filter((post) => post._id !== id)
+    );
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
+
+const updatePost = async (id, content) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await api.put(
+      `/posts/${id}`,
+      { content },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setPosts((prev) =>
+      prev.map((post) =>
+        post._id === id ? res.data : post
+      )
+    );
+  } catch (error) {
+    console.log(error.response?.data);
+  }
+};
 
   const logout = () => {
-    localStorage.removeItem("user");
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     setUser(null);
   }
 
@@ -90,7 +151,12 @@ function Home({ user,setUser }) {
 
        {/* Post List Section */}
        <div className="col-12 col-md-10 col-lg-8">
-         <PostList posts={posts} onDelete={deletePost} onLike={likePost} />
+         <PostList
+           posts={posts}
+           onDelete={deletePost}
+           onLike={likePost}
+           onUpdate={updatePost}
+         />
        </div>
      </div>
    </div>

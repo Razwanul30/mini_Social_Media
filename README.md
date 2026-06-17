@@ -1,46 +1,102 @@
-# Mini Social Media App
+# Mini Social Media Frontend
 
-A simple social media-style application built with React to practice core
-frontend concepts and component-based architecture.
+A React-based frontend for a social media application. Users can create posts, like/unlike posts, comment on posts, edit their own posts, and manage authentication using JWT.
 
 ## Features
-- Create post
-- Like post
-- Comment on posts
-- Delete posts
-- Simple login (name-based)
+
+- User Login & Logout
+- JWT Authentication
+- Create New Posts
+- View All Posts
+- Edit Posts
+- Delete Posts
+- Like / Unlike Posts
+- Comment System
+- Responsive Design
+- REST API Integration
 
 ## Tech Stack
+
 - React
-- JavaScript
+- JavaScript (ES6+)
+- Bootstrap 5
+- Axios
 - Vite
 
-## Design Decisions
-This project is intentionally kept simple and open to focus on learning React
-fundamentals instead of complex business rules.
+## Installation
 
-- Open social feed: any user can create, like, comment, and delete posts.
-- No strict ownership rules for posts.
-- No global state management (Redux) in this version.
-- No real authentication; login is UI-focused.
+### Clone the Repository
 
-## Learning Goals
-- Component separation
-- State lifting and props
-- Form handling
-- Local state management with `useState`
-- Building real-world UI features step by step
+```bash
+git clone https://github.com/your-username/mini-social-media-frontend.git
+cd mini-social-media-frontend
+```
 
-## Future Improvements
-- Proper authentication
-- Role-based permissions
-- Global state management (Redux)
-- Backend API integration
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+### Run the Application
+
+```bash
+npm run dev
+```
+
+The application will start on:
+
+```txt
+http://localhost:5173
+```
+
+## Project Structure
+
+```txt
+src/
+├── api/
+│   └── api.js
+├── components/
+│   ├── CreatePost.jsx
+│   ├── Post.jsx
+│   └── PostList.jsx
+├── pages/
+│   ├── Home.jsx
+│   └── Login.jsx
+├── App.jsx
+├── main.jsx
+└── index.css
+```
+
+## Screenshots
+
+### Login Page
+
+(Add screenshot here)
+
+### Home Feed
+
+(Add screenshot here)
+
+## Backend
+
+This frontend communicates with a separate Node.js + Express + MongoDB backend API.
 
 ## Author
 
-**Md Razwanul Haque**  
-Computer Science & Engineering Student  
-Beginner Frontend Developer (React)
+**Md. Razwanul Islam**
 
+Computer Science and Engineering  
+Begum Rokeya University, Rangpur
 
+## License
+
+This project is licensed under the MIT License.

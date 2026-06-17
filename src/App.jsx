@@ -3,8 +3,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 
 function App() {
-  const [user, setUser] = useState(null);
-  JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   return (
     <>
